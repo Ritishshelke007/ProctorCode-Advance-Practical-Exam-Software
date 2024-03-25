@@ -9,6 +9,8 @@ import {
   yearOptions,
 } from "../../constants/Options";
 import Upload from "../../components/Upload/Upload";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const CreateExam = () => {
   const formRef = useRef();
@@ -98,10 +100,18 @@ const CreateExam = () => {
     formData["enableVideoProctoring"] = enableVideoProctoring;
     formData["enableAudioProctoring"] = enableAudioProctoring;
 
-    const { course, examCode, examDate } = formData;
-
     console.log("Form submitted", formData);
+
+    axios
+      .post("http://localhost:3000/exam/create-exam", formData)
+      .then((res) => {
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(err.response.data);
+      });
   };
+
   return (
     <div className="mt-3 grid h-full grid-cols-1 gap-5 xl:grid-cols-1 2xl:grid-cols-1">
       <div className="col-span-1 h-fit w-full xl:col-span-1 2xl:col-span-2">
