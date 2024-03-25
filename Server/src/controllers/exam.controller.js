@@ -38,4 +38,16 @@ const createExam = async (req, res) => {
   }
 };
 
-export { createExam };
+const getExams = async (req, res) => {
+  try {
+    const exams = await Exam.find({});
+
+    if (exams) {
+      return res.status(200).json({ exams });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export { createExam, getExams };

@@ -2,6 +2,7 @@ import Card from "../Card/Card";
 import { useNavigate } from "react-router-dom";
 
 const ExamCard = ({
+  key,
   courseName,
   courseCode,
   secretCode,
@@ -19,18 +20,19 @@ const ExamCard = ({
   return (
     <Card
       extra={`flex flex-col w-full h-full !p-4 3xl:p-![18px] bg-white ${extra}`}
+      key={key}
     >
       <div className="h-full w-full">
         <div className="relative w-full space-y-3">
           <p className="text-lg font-bold text-navy-700 dark:text-white">
             Course Name: {courseName}
           </p>
-          <p className="text-md mt-1 font-medium text-gray-700 md:mt-2">
+          {/* <p className="text-md mt-1 font-medium text-gray-700 md:mt-2">
             <span className="text-navy-700 dark:text-navy-50">
               Course Code:
             </span>{" "}
             {courseCode}
-          </p>
+          </p> */}
           <p className="text-md mt-1 font-medium text-gray-700 md:mt-2">
             <span className="text-navy-700 dark:text-navy-50">
               Secret Code:
