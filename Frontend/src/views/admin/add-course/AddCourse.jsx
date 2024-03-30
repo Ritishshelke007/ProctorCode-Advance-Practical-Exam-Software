@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-import InputField from "../../components/InputField/InputField";
+import InputField from "../../../components/InputField/InputField";
 
 const AddCourse = () => {
   const formRef = useRef();
@@ -26,10 +26,11 @@ const AddCourse = () => {
       .then((response) => {
         console.log(response.data);
         toast.success("Course added successfully");
+        e.target.reset();
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Error in adding new course");
+        toast.error(error.response.data.message);
       });
   };
   return (

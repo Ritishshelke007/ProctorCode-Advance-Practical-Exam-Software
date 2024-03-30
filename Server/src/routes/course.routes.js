@@ -1,8 +1,13 @@
 import express, { Router } from "express";
-import { addCourse } from "../controllers/course.controller.js";
+import {
+  addCourse,
+  getCoursesByFaculty,
+} from "../controllers/course.controller.js";
+import { verifyJWT } from "../middlewares/faculty.auth.middleware.js";
 
 const router = Router();
 
-router.route("/add-course").post(addCourse);
+router.route("/add-course").post(verifyJWT, addCourse);
+router.route("/get-courses-by-faculty").post(verifyJWT, getCoursesByFaculty);
 
 export default router;

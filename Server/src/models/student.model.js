@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import jwt from "jsonwebtoken";
 
 const studentSchema = new Schema(
   {
@@ -6,15 +7,18 @@ const studentSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     prn: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     year: {
       type: String,
@@ -32,8 +36,38 @@ const studentSchema = new Schema(
       type: String,
       required: true,
     },
+    refreshToken: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
+
+studentSchema.methods.generateAccessToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+      email: this.email,
+      name: this.name,
+      prn: this.prn,
+    },
+    process.env.SECRECT_ACCESS_KEY,
+    {
+      expiresIn: "1d",
+    }
+  );
+};
+
+studentSchema.methods.generateRefreshToken = function () {
+  return jwt.sign(
+    {
+      _id: this._id,
+    },
+    process.env.SECRECT_ACCESS_KEY,
+    {
+      expiresIn: "5d",
+    }
+  );
+};
 
 export const Student = mongoose.model("Student", studentSchema);

@@ -2,31 +2,32 @@ import axios from "axios";
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { Navigate } from "react-router-dom";
-// import { storeInSession } from "../../common/session";
+import { storeInSession } from "../../common/session";
+import UserContext from "../../contexts/UserContext";
 
 export default function FacultySignUp() {
-  //   let {
-  //     userAuth: { access_token },
-  //     setUserAuth,
-  //   } = useContext(UserContext);
+  // let {
+  //   userAuth: { access_token },
+  //   setUserAuth,
+  // } = useContext(UserContext);
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { email, prn, name, year, division, batch, password } =
-      e.target.elements;
+    const { email, name, password } = e.target.elements;
+
+    if (!email.value || !name.value || !password.value) {
+      return toast.error("All fields are required");
+    }
+
     axios
-      .post("http://localhost:3001/student", {
+      .post("http://localhost:3000/auth/faculty/signup", {
         email: email.value,
-        prn: prn.value,
         name: name.value,
-        year: year.value,
-        division: division.value,
-        batch: batch.value,
         password: password.value,
       })
       .then(({ data }) => {
-        console.log(response.data);
-        toast.success("Student registered successfully");
+        console.log(data);
+        toast.success("Faculty registered successfully");
         storeInSession("user", JSON.stringify(data));
         setUserAuth(data);
       })

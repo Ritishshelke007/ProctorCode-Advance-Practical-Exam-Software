@@ -1,6 +1,6 @@
 import React from "react";
 import { HiX } from "react-icons/hi";
-import Links from "./components/Links"
+import Links from "./components/Links";
 
 const adminRoutes = [
   {
@@ -10,7 +10,13 @@ const adminRoutes = [
     icon: "dashboard",
   },
   {
-    name: "Add Course",
+    name: "Courses",
+    path: "courses",
+    layout: "/admin",
+    icon: "course",
+  },
+  {
+    name: "Add new Course",
     path: "add-course",
     layout: "/admin",
     icon: "create",
@@ -40,7 +46,6 @@ const adminRoutes = [
     icon: "course",
   },
 ];
-
 
 const Sidebar = ({ open, onClose }) => {
   return (

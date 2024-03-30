@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import UserContext from "../../contexts/UserContext";
+import { lookInSession } from "../../common/session";
+
 const adminRoutes = [
   {
     name: "Dashboard",
     path: "dashboard",
     layout: "/admin",
     icon: "dashboard",
+  },
+  {
+    name: "Courses",
+    path: "courses",
+    layout: "/admin",
+    icon: "course",
   },
   {
     name: "Add Course",
@@ -45,6 +54,11 @@ const adminRoutes = [
 const AdminLayout = (props) => {
   const { ...rest } = props;
   const location = useLocation();
+
+  const navigate = useNavigate();
+  let {
+    user: { accessToken },
+  } = useContext(UserContext);
   const [open, setOpen] = React.useState(true);
   const [currentRoute, setCurrentRoute] = React.useState("Dashboard");
 
@@ -56,6 +70,10 @@ const AdminLayout = (props) => {
   React.useEffect(() => {
     getActiveRoute(adminRoutes);
   }, [location.pathname]);
+
+  React.useEffect(() => {
+    lookInSession("user") ? navigate("/admin/dashboard") : navigate("/");
+  }, []);
 
   const getActiveRoute = (routes) => {
     let activeRoute = "dashboard";
@@ -92,7 +110,9 @@ const AdminLayout = (props) => {
       }
     });
   };
-  return (
+  return accessToken ? (
+    <Navigate to="/admin/dashboard" />
+  ) : (
     <div className="flex h-full w-full">
       <Sidebar open={open} onClose={() => setOpen(false)} />
       {/* Navbar & Main Content */}
@@ -110,10 +130,10 @@ const AdminLayout = (props) => {
               secondary={getActiveNavbar(adminRoutes)}
               {...rest}
             />
-            {<Outlet />}
-            <div className="p-3">
+            <div className="min-h-screen">{<Outlet />}</div>
+            {/* <div className="p-3">
               <div>Footer</div>
-            </div>
+            </div> */}
           </div>
         </main>
       </div>

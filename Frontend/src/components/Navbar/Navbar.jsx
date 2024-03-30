@@ -10,10 +10,24 @@ import {
   IoMdInformationCircleOutline,
 } from "react-icons/io";
 import avatar from "../../assets/img/avatars/avatar4.png";
+import UserContext from "../../contexts/UserContext";
+import { removeFromSession } from "../../common/session";
 
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
+
+  let {
+    user: { accessToken },
+    setUser,
+  } = React.useContext(UserContext);
+
+  const handleLogout = () => {
+    removeFromSession("user");
+    setUser({ accessToken: null });
+    <Navigate to="/admin" replace />;
+    console.log(sessionStorage);
+  };
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -208,7 +222,7 @@ const Navbar = (props) => {
                   Newsletter Settings
                 </a>
                 <button
-                  // onClick={handleLogout}
+                  onClick={handleLogout}
                   className="mt-3 text-start text-sm font-medium text-red-500 transition duration-150 ease-out hover:text-red-500 hover:ease-in"
                 >
                   Log Out

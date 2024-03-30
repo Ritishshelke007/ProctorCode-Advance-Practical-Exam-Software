@@ -1,11 +1,15 @@
 import React from "react";
-import ExamCard from "../../components/ExamCard/ExamCard";
+import ExamCard from "../../../components/ExamCard/ExamCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import UserContext from "../../../contexts/UserContext";
 
 const ExamDashboard = () => {
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(true);
+  let { user, setUser } = React.useContext(UserContext);
+
+  console.log(user);
 
   useEffect(() => {
     axios
@@ -35,7 +39,6 @@ const ExamDashboard = () => {
             return (
               <>
                 <ExamCard
-                  key={index}
                   courseName={exam.course}
                   secretCode={exam.examCode}
                   examDateTime={exam.examDate + " " + exam.examTime}

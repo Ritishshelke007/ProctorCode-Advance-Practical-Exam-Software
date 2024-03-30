@@ -41,7 +41,7 @@ export default function StudentSignUp() {
   return (
     <div className="flex h-screen w-full items-center justify-center px-2 md:mx-0 md:px-0 ">
       {/* Sign in section */}
-      <div className="w-full flex-col items-center p-10 rounded-md shadow-lg xl:max-w-[700px]">
+      <div className="w-full flex-col items-center p-10 rounded-md border shadow-lg xl:max-w-[700px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
           Student Registration
         </h4>
@@ -59,8 +59,9 @@ export default function StudentSignUp() {
                 <input
                   type="text"
                   id="email"
+                  required
                   placeholder="mail@simmmple.com"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  className="mt-2 flex h-12 focus:ring-1 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
                 />
               </div>
 
@@ -75,7 +76,8 @@ export default function StudentSignUp() {
                   type="text"
                   id="prn"
                   placeholder="Enter PRN"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  className="mt-2 flex h-12 focus:ring-1 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  required
                 />
               </div>
 
@@ -90,22 +92,24 @@ export default function StudentSignUp() {
                   type="text"
                   id="name"
                   placeholder="Enter name"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  className="mt-2 flex h-12 focus:ring-1 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  required
                 />
-              <div className="mt-3">
-                <label
-                  htmlFor="password"
-                  className="text-sm text-navy-700 dark:text-white ml-1.5 font-medium"
-                >
-                  Password*
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Enter Password"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
-                />
-              </div>
+                <div className="mt-3">
+                  <label
+                    htmlFor="password"
+                    className="text-sm text-navy-700 dark:text-white ml-1.5 font-medium"
+                  >
+                    Password*
+                  </label>
+                  <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter Password"
+                    className="mt-2 flex h-12 focus:ring-1 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
@@ -121,14 +125,15 @@ export default function StudentSignUp() {
                   type="text"
                   id="year"
                   placeholder="Enter Year"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  className="mt-2 flex h-12 w-full focus:ring-1 items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  required
                 />
               </div>
 
               <div className="mt-3">
                 <label
                   htmlFor="division"
-                  className="text-sm text-navy-700 dark:text-white ml-1.5 font-medium"
+                  className="text-sm text-navy-700  dark:text-white ml-1.5 font-medium"
                 >
                   Division*
                 </label>
@@ -136,7 +141,8 @@ export default function StudentSignUp() {
                   type="text"
                   id="division"
                   placeholder="Enter Year"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  className="mt-2 flex h-12 focus:ring-1 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  required
                 />
               </div>
               <div className="mt-3">
@@ -150,7 +156,8 @@ export default function StudentSignUp() {
                   type="text"
                   id="batch"
                   placeholder="Enter Year"
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  className="mt-2 flex h-12 w-full focus:ring-1 items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
+                  required
                 />
               </div>
             </div>

@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
-import SelectField from "../../components/SelectField/SelectField";
-import InputField from "../../components/InputField/InputField";
-import Switch from "../../components/Switch/Switch";
+import SelectField from "../../../components/SelectField/SelectField";
+import InputField from "../../../components/InputField/InputField";
+import Switch from "../../../components/Switch/Switch";
 import {
   batchOptions,
   courseOptions,
   divisionOptions,
   yearOptions,
-} from "../../constants/Options";
-import Upload from "../../components/Upload/Upload";
+} from "../../../constants/Options";
+import Upload from "../../../components/Upload/Upload";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 

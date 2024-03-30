@@ -3,9 +3,16 @@ import { toast } from "react-hot-toast";
 import Checkbox from "../../components/Checkbox/Checkbox";
 import axios from "axios";
 import InputField from "../../components/InputField/InputField";
+import { storeInSession } from "../../common/session";
+import { Navigate, useNavigate } from "react-router-dom";
+import UserContext from "../../contexts/UserContext";
 
 export default function FacultySignIn() {
   const formRef = useRef();
+  const navigate = useNavigate();
+
+  let { user, setUser } = useContext(UserContext);
+  console.log(user);
 
   const handleStudentLogin = (e) => {
     e.preventDefault();
@@ -23,26 +30,33 @@ export default function FacultySignIn() {
 
     console.log(email, password);
 
+    axios.defaults.withCredentials = true;
+
     axios
       .post("http://localhost:3000/auth/faculty/login", {
         email,
         password,
       })
       .then(({ data }) => {
+        console.log(data);
         toast.success("Faculty logged in successfully");
-        // storeInSession("user", JSON.stringify(data));
-        // console.log(sessionStorage);
-        // setUserAuth(data);
+        storeInSession("user", JSON.stringify(data));
+        console.log(sessionStorage);
+        setUser(data);
+        console.log(user);
+        <Navigate to="/admin/dashboard" replace />;
       })
       .catch((error) => {
-        console.log(error.response.data);
-        toast.error("Error in Student login");
+        console.log(error);
+        toast.error(error.response.data.message);
       });
   };
-  return (
-    <div className="mt-16 mb-16 flex h-full w-[500px] gap-10 justify-center items-center border px-16 rounded-lg py-5 shadow-sm">
+  return user.accessToken ? (
+    <Navigate to="/admin/dashboard" replace />
+  ) : (
+    <div className="mt-16 mb-16 flex h-full w-full gap-10 justify-center items-center">
       {/* Sign in section */}
-      <div className="mt-[10vh] w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 ">
+      <div className="mt-[10vh] w-fit max-w-full flex-col items-center shadow-md p-10 border">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
           Sign In as Faculty
         </h4>
