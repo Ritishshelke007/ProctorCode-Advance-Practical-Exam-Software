@@ -44,7 +44,7 @@ export default function FacultySignIn() {
         console.log(sessionStorage);
         setUser(data);
         console.log(user);
-        <Navigate to="/admin/dashboard" replace />;
+        navigate("/admin/dashboard");
       })
       .catch((error) => {
         console.log(error);

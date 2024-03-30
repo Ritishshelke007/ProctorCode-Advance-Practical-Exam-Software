@@ -17,7 +17,7 @@ const ExamDashboard = () => {
       .then((res) => {
         setExams(res.data.exams);
         setLoading(false);
-        console.log(exams);
+        console.log(res.data.exams);
       })
       .catch((err) => {
         console.log(err);
@@ -37,16 +37,18 @@ const ExamDashboard = () => {
         <div className="grid grid-cols-3 gap-5">
           {exams.map((exam, index) => {
             return (
-              <>
+              <div key={index}>
                 <ExamCard
                   courseName={exam.course}
                   secretCode={exam.examCode}
                   examDateTime={exam.examDate + " " + exam.examTime}
+                  examDuration={exam.examDuration}
                   year={exam.year}
                   division={exam.division}
+                  batch={exam.batch}
                   status={"Starts on " + exam.examDate + " " + exam.examTime}
                 />
-              </>
+              </div>
             );
           })}
           {/* <ExamCard

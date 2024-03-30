@@ -1,7 +1,8 @@
 import React from "react";
+import axios from "axios";
 import Dropdown from "../Dropdown/Dropdown";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BsArrowBarUp } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
@@ -14,6 +15,7 @@ import UserContext from "../../contexts/UserContext";
 import { removeFromSession } from "../../common/session";
 
 const Navbar = (props) => {
+  const navigate = useNavigate();
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
 
@@ -25,8 +27,11 @@ const Navbar = (props) => {
   const handleLogout = () => {
     removeFromSession("user");
     setUser({ accessToken: null });
-    <Navigate to="/admin" replace />;
+    navigate("/admin");
     console.log(sessionStorage);
+
+    axios.defaults.withCredentials = true;
+    axios.get("http://localhost:3000/auth/faculty/logout");
   };
 
   return (

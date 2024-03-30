@@ -59,6 +59,7 @@ function App() {
           <Route path="/admin/dashboard" element={<ExamDashboard />} />
           <Route path="/admin/courses" element={<Courses />} />
           <Route path="/admin/add-course" element={<AddCourse />} />
+          <Route path="/admin/create-exam" element={<CreateExam />} />
         </Route>
       </Routes>
     </UserContextProvider>

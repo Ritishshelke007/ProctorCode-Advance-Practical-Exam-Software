@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import SelectField from "../../../components/SelectField/SelectField";
 import InputField from "../../../components/InputField/InputField";
 import Switch from "../../../components/Switch/Switch";
@@ -19,6 +19,7 @@ const CreateExam = () => {
   const [problemStatements, setProblemStatements] = useState([]);
   const [enableVideoProctoring, setEnableVideoProctoring] = useState(false);
   const [enableAudioProctoring, setEnableAudioProctoring] = useState(false);
+  const [courses, setCourses] = useState([]);
 
   const handleSwitchChange = (e) => {
     const { name, checked } = e.target;
@@ -106,10 +107,40 @@ const CreateExam = () => {
       .post("http://localhost:3000/exam/create-exam", formData)
       .then((res) => {
         toast.success(res.data.message);
+
+        // Clear all form fields
+        setExamCode("");
+        setProblemsCount(0);
+        setProblemStatements([]);
+        setEnableVideoProctoring(false);
+        setEnableAudioProctoring(false);
+        // Reset the form
+        formRef.current.reset();
       })
       .catch((err) => {
-        toast.error(err.response.data);
+        toast.error(err.response.data.message);
       });
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      axios.defaults.withCredentials = true;
+      axios
+        .post("http://localhost:3000/course/get-courses-by-faculty")
+        .then((res) => {
+          console.log(res.data);
+          setCourses(res.data);
+        })
+        .catch((err) => {
+          toast.error(err.response.data.message);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -126,12 +157,21 @@ const CreateExam = () => {
                 label="Select course*"
                 id="course"
                 name="course"
-                options={courseOptions}
+                options={
+                  courses.length > 0
+                    ? courses.map((course) => {
+                        return {
+                          value: course._id,
+                          label: course.courseName,
+                        };
+                      })
+                    : courseOptions
+                }
                 extra="mb-3"
               />
 
-              <div className="grid grid-cols-4 gap-10 w-full ">
-                <div className="flex relative  col-span-2">
+              <div className="grid grid-cols-5 gap-10 w-full ">
+                <div className="flex relative col-span-2">
                   <InputField
                     label="Exam Code*"
                     id="examCode"
@@ -159,10 +199,20 @@ const CreateExam = () => {
                   extra="mb-3"
                 />
                 <InputField
-                  label="Select Time*"
+                  label="Start Time*"
                   id="examTime"
                   name="examTime"
                   type="time"
+                  extra="mb-3"
+                />
+
+                <InputField
+                  label="Exam Duration*"
+                  placeholder="In Hours"
+                  minValue="1"
+                  id="examDuration"
+                  name="examDuration"
+                  type="number"
                   extra="mb-3"
                 />
               </div>

@@ -11,12 +11,7 @@ const batchOptions = [
   { value: "A4", label: "A4" },
 ];
 
-const courseOptions = [
-  { value: "DSA", label: "Data Structures and Algorithms" },
-  { value: "DBMS", label: "Database Management System" },
-  { value: "OS", label: "Operating System" },
-  { value: "CN", label: "Computer Networks" },
-];
+const courseOptions = [{ value: "DSA", label: "Select course" }];
 
 const yearOptions = [
   { value: "FY", label: "First Year" },

@@ -20,6 +20,10 @@ const examSchema = new Schema(
       type: String,
       required: true,
     },
+    examDuration: {
+      type: Number,
+      required: true,
+    },
     year: {
       type: String,
       required: true,

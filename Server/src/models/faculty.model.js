@@ -22,6 +22,12 @@ const facultySchema = new Schema(
         ref: "Course",
       },
     ],
+    exams: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Exam",
+      },
+    ],
   },
   { timestamps: true }
 );

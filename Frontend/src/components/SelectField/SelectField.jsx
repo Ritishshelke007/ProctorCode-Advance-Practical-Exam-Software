@@ -24,6 +24,7 @@ const SelectField = ({
         id={id}
         name={name}
         defaultValue={options[0].value}
+        disabled={disabled}
         className="my-2 block h-12 w-full rounded-xl border border-gray-300 bg-white/0 p-3 text-sm text-gray-900 outline-none focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:!bg-white/5 dark:text-white dark:placeholder-gray-400 dark:placeholder:!text-[rgba(255,255,255,0.15)] dark:focus:border-blue-500 dark:focus:ring-blue-500"
       >
         {options.map((option) => (
