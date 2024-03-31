@@ -34,12 +34,6 @@ const adminRoutes = [
     icon: "course",
   },
   {
-    name: "All Courses",
-    path: "all-courses",
-    layout: "/admin",
-    icon: "course",
-  },
-  {
     name: "Profile",
     path: "profile",
     layout: "/admin",

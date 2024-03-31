@@ -26,7 +26,7 @@ const ExamCard = ({
     >
       <div className="h-full w-full">
         <div className="relative w-full space-y-3">
-          <p className="text-lg font-bold text-navy-700 dark:text-white">
+          <p className="text-lg font-bold text-navy-700 dark:text-white line-clamp-2 h-14">
             Course Name: {courseName}
           </p>
           {/* <p className="text-md mt-1 font-medium text-gray-700 md:mt-2">

@@ -161,7 +161,7 @@ const CreateExam = () => {
                   courses.length > 0
                     ? courses.map((course) => {
                         return {
-                          value: course._id,
+                          value: course.courseName,
                           label: course.courseName,
                         };
                       })

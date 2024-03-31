@@ -1,5 +1,6 @@
 import { Exam } from "../models/exam.model.js";
 import { Faculty } from "../models/faculty.model.js";
+import moment from "moment";
 
 const createExam = async (req, res) => {
   try {
@@ -141,4 +142,35 @@ const getExamDetailsByCode = async (req, res) => {
   }
 };
 
-export { createExam, getExams, getExamByCode, getExamDetailsByCode };
+const getCompletedExams = async (req, res) => {
+  try {
+    const currentDateTime = moment(); // Get current datetime
+    const currentFormattedDate = currentDateTime.format("DD/MM/YYYY");
+    const currentFormattedTime = currentDateTime.format("HH:mm");
+
+    // Get all exams from the database
+    const allExams = await Exam.find({});
+
+    // Filter completed exams based on start time + duration being less than current time
+    const completedExams = allExams.filter((exam) => {
+      const startDateTime = moment(
+        `${exam.examDate} ${exam.examTime}`,
+        "DD/MM/YYYY HH:mm"
+      );
+      const endDateTime = startDateTime.clone().add(exam.examDuration, "hours");
+      return endDateTime.isBefore(currentDateTime);
+    });
+
+    return res.status(200).json({ completedExams });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export {
+  createExam,
+  getExams,
+  getExamByCode,
+  getExamDetailsByCode,
+  getCompletedExams,
+};

@@ -21,6 +21,8 @@ import CreateExam from "./views/admin/create-exam/CreateExam";
 import UserContextProvider from "./contexts/UserContextProvider";
 import Courses from "./views/admin/courses/Courses";
 import MonitorExam from "./views/admin/monitor-exam/MonitorExam";
+import CompletedExams from "./views/admin/completed-exams/CompletedExams";
+import Profile from "./views/admin/profile/Profile";
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
@@ -65,6 +67,8 @@ function App() {
             path="/admin/dashboard/exam/:examcode"
             element={<MonitorExam />}
           />
+          <Route path="/admin/previous-exams" element={<CompletedExams />} />
+          <Route path="/admin/profile" element={<Profile />} />
         </Route>
       </Routes>
     </UserContextProvider>

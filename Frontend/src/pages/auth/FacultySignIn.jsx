@@ -11,8 +11,10 @@ export default function FacultySignIn() {
   const formRef = useRef();
   const navigate = useNavigate();
 
-  let { user, setUser } = useContext(UserContext);
-  console.log(user);
+  let {
+    user: { accessToken },
+    setUser,
+  } = useContext(UserContext);
 
   const handleStudentLogin = (e) => {
     e.preventDefault();
@@ -43,7 +45,6 @@ export default function FacultySignIn() {
         storeInSession("user", JSON.stringify(data));
         console.log(sessionStorage);
         setUser(data);
-        console.log(user);
         navigate("/admin/dashboard");
       })
       .catch((error) => {
@@ -51,8 +52,8 @@ export default function FacultySignIn() {
         toast.error(error.response.data.message);
       });
   };
-  return user.accessToken ? (
-    <Navigate to="/admin/dashboard" replace />
+  return accessToken ? (
+    navigate("/dashboard")
   ) : (
     <div className="mt-16 mb-16 flex h-full w-full gap-10 justify-center items-center">
       {/* Sign in section */}
