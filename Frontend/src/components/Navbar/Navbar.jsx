@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import Dropdown from "../Dropdown/Dropdown";
+import { useSelector, useDispatch } from "react-redux";
+import { clearUser } from "../../features/auth/authSlice";
 import { FiAlignJustify } from "react-icons/fi";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { BsArrowBarUp } from "react-icons/bs";
@@ -11,24 +13,21 @@ import {
   IoMdInformationCircleOutline,
 } from "react-icons/io";
 import avatar from "../../assets/img/avatars/avatar4.png";
-import UserContext from "../../contexts/UserContext";
 import { removeFromSession } from "../../common/session";
 
 const Navbar = (props) => {
+  const user = useSelector((state) => state.user.student);
+  const dispatch = useDispatch();
+  console.log(user);
   const navigate = useNavigate();
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
 
-  let {
-    user: { accessToken },
-    setUser,
-  } = React.useContext(UserContext);
-
   const handleLogout = () => {
     removeFromSession("user");
-    setUser({ accessToken: null });
     navigate("/admin");
     console.log(sessionStorage);
+    dispatch(clearUser());
 
     axios.defaults.withCredentials = true;
     axios.get("http://localhost:3000/auth/faculty/logout");
@@ -107,24 +106,23 @@ const Navbar = (props) => {
                 </div>
                 <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
                   <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
-                    New Update: Horizon UI Dashboard PRO
+                    New Update: Exam Scheduled for DSA
                   </p>
                   <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                    A new update for your downloaded item is available!
+                    New Exam is scheduled for DSA on 20th April 2024
                   </p>
                 </div>
               </button>
-
               <button className="flex w-full items-center">
                 <div className="flex h-full w-[85px] items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500 py-4 text-2xl text-white">
                   <BsArrowBarUp />
                 </div>
                 <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
                   <p className="mb-1 text-left text-base font-bold text-gray-900 dark:text-white">
-                    New Update: Horizon UI Dashboard PRO
+                    New Update: Exam Scheduled for DSA
                   </p>
                   <p className="font-base text-left text-xs text-gray-900 dark:text-white">
-                    A new update for your downloaded item is available!
+                    New Exam is scheduled for DSA on 20th April 2024
                   </p>
                 </div>
               </button>
@@ -149,26 +147,13 @@ const Navbar = (props) => {
                 }}
                 className="mb-2 aspect-video w-full rounded-lg"
               /> */}
-              <a
-                target="blank"
-                href="https://horizon-ui.com/pro?ref=live-free-tailwind-react"
-                className="px-full linear flex cursor-pointer items-center justify-center rounded-xl bg-brand-500 py-[11px] font-bold text-white transition duration-200 hover:bg-brand-600 hover:text-white active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
-              >
-                Buy Horizon UI PRO
-              </a>
-              <a
-                target="blank"
-                href="https://horizon-ui.com/docs-tailwind/docs/react/installation?ref=live-free-tailwind-react"
-                className="px-full linear flex cursor-pointer items-center justify-center rounded-xl border py-[11px] font-bold text-navy-700 transition duration-200 hover:bg-gray-200 hover:text-navy-700 dark:!border-white/10 dark:text-white dark:hover:bg-white/20 dark:hover:text-white dark:active:bg-white/10"
-              >
-                See Documentation
-              </a>
+
               <a
                 target="blank"
                 href="https://horizon-ui.com/?ref=live-free-tailwind-react"
                 className="hover:bg-black px-full linear flex cursor-pointer items-center justify-center rounded-xl py-[11px] font-bold text-navy-700 transition duration-200 hover:text-navy-700 dark:text-white dark:hover:text-white"
               >
-                Try Horizon Free
+                Some Important Information
               </a>
             </div>
           }
@@ -207,19 +192,13 @@ const Navbar = (props) => {
               <div className="p-4">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    👋 Hey, Adela
+                    👋 Hey, {user.name}
                   </p>{" "}
                 </div>
               </div>
               <div className="h-px w-full bg-gray-200 dark:bg-white/20 " />
 
               <div className="flex flex-col p-4">
-                <a
-                  href=" "
-                  className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
-                >
-                  Profile Settings
-                </a>
                 <a
                   href=" "
                   className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white"

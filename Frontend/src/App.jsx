@@ -23,6 +23,10 @@ import Courses from "./views/admin/courses/Courses";
 import MonitorExam from "./views/admin/monitor-exam/MonitorExam";
 import CompletedExams from "./views/admin/completed-exams/CompletedExams";
 import Profile from "./views/admin/profile/Profile";
+import Home from "./views/student/home/Home";
+import StudentLayout from "./layouts/student";
+import StudentProfile from "./views/student/profile/Profile";
+import StudentCompletedExams from "./views/student/completed-exams/CompletedExams";
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
@@ -52,10 +56,18 @@ function App() {
     <UserContextProvider>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<StudentSignUp />} />
         <Route path="/admin" element={<FacultySignIn />} />
         <Route path="/admin/signup" element={<FacultySignUp />} />
+
+        {/* Student routes */}
+
+        <Route path="/" element={<StudentLayout />}>
+          <Route path="/dashboard" element={<Home />} />
+          <Route path="/profile" element={<StudentProfile />} />
+          <Route path="/completed-exams" element={<StudentCompletedExams />} />
+        </Route>
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>

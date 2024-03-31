@@ -11,30 +11,6 @@ const adminRoutes = [
     icon: "dashboard",
   },
   {
-    name: "Add Course",
-    path: "add-course",
-    layout: "/admin",
-    icon: "create",
-  },
-  {
-    name: "Create Exam",
-    path: "create-exam",
-    layout: "/admin",
-    icon: "course",
-  },
-  {
-    name: "Previous Exams",
-    path: "previous-exams",
-    layout: "/admin",
-    icon: "course",
-  },
-  {
-    name: "All Courses",
-    path: "all-courses",
-    layout: "/admin",
-    icon: "course",
-  },
-  {
     name: "Profile",
     path: "profile",
     layout: "/admin",
@@ -94,7 +70,7 @@ const StudentLayout = (props) => {
   };
   return (
     <div className="flex h-full w-full">
-      <Sidebar open={open} onClose={() => setOpen(false)} />
+      <Sidebar open={open} onClose={() => setOpen(false)} layout="student" />
       {/* Navbar & Main Content */}
       <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
         {/* Main Content */}
@@ -110,6 +86,7 @@ const StudentLayout = (props) => {
               secondary={getActiveNavbar(adminRoutes)}
               {...rest}
             />
+            {<Outlet />}
             <div className="p-3">
               <div>Footer</div>
             </div>

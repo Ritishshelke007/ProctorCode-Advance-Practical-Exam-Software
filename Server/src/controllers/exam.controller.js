@@ -167,10 +167,23 @@ const getCompletedExams = async (req, res) => {
   }
 };
 
+const getExamByStudent = async (req, res) => {
+  try {
+    const { year, division, batch } = req.body;
+
+    const exams = await Exam.find({ year, division, batch });
+
+    return res.status(200).json({ exams });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   createExam,
   getExams,
   getExamByCode,
   getExamDetailsByCode,
   getCompletedExams,
+  getExamByStudent,
 };

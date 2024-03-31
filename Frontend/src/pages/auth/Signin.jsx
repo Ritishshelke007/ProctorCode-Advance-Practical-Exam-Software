@@ -6,10 +6,17 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField/InputField";
 import UserContext from "../../contexts/UserContext";
 import { storeInSession } from "../../common/session";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../features/auth/authSlice";
 
 export default function SignIn() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  let { user, setUser } = useContext(UserContext);
+  // let {
+  //   user,
+  //   user: { accessToken },
+  //   setUser,
+  // } = useContext(UserContext);
   const formRef = useRef();
 
   const handleStudentLogin = (e) => {
@@ -46,9 +53,11 @@ export default function SignIn() {
         password,
       })
       .then(({ data }) => {
-        navigate("/signup");
-        toast.success("Student logged in successfully");
+        navigate("/dashboard");
+        // setUser(data);
         console.log(data);
+        toast.success("Student logged in successfully");
+        dispatch(setUser(data));
       })
       .catch((error) => {
         console.log(error);
@@ -68,6 +77,9 @@ export default function SignIn() {
         console.log(error);
       });
   };
+  // return accessToken ? (
+  //   navigate("/home")
+  // ) : (
   return (
     <div className="mt-16 mb-10 flex h-full w-full justify-center items-center">
       {/* Sign in section */}

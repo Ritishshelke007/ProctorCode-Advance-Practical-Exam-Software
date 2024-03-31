@@ -51,7 +51,7 @@ studentSchema.methods.generateAccessToken = function () {
       name: this.name,
       prn: this.prn,
     },
-    process.env.SECRECT_ACCESS_KEY,
+    process.env.SECRET_ACCESS_KEY,
     {
       expiresIn: "1d",
     }
@@ -63,7 +63,7 @@ studentSchema.methods.generateRefreshToken = function () {
     {
       _id: this._id,
     },
-    process.env.SECRECT_ACCESS_KEY,
+    process.env.SECRET_ACCESS_KEY,
     {
       expiresIn: "5d",
     }
