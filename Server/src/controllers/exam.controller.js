@@ -40,10 +40,16 @@ const createExam = async (req, res) => {
       { new: true }
     );
 
-    if (exam) {
-      return res
-        .status(200)
-        .json({ message: "Exam created successfully", exam });
+    const populatedExam = await Exam.populate(exam, {
+      path: "monitoringData.student",
+      select: "_id email name prn",
+    });
+
+    if (populatedExam) {
+      return res.status(200).json({
+        message: "Exam created successfully",
+        exam: populatedExam,
+      });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -83,4 +89,56 @@ const getExams = async (req, res) => {
   }
 };
 
-export { createExam, getExams };
+const getExamByCode = async (req, res) => {
+  try {
+    const examCode = req.params["examcode"];
+
+    const exam = await Exam.findOne({ examCode });
+
+    // if (exam) {
+    return res.status(200).json({ exam });
+    // }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Backend Controller
+
+const getExamDetailsByCode = async (req, res) => {
+  try {
+    const examCode = req.params["examcode"];
+
+    // Fetch exam details based on exam code
+    const exam = await Exam.findOne({ examCode }).populate(
+      "monitoringData.student"
+    );
+
+    if (!exam) {
+      return res.status(404).json({ message: "Exam not found" });
+    }
+
+    // Format the response data as needed
+    const formattedExam = {
+      course: exam.course,
+      examCode: exam.examCode,
+      // Include other exam details as needed
+      monitoringData: exam.monitoringData.map((data) => ({
+        studentName: data.student.name,
+        studentPrn: data.student.prn,
+        startTime: data.startTime,
+        tabChangeCount: data.tabChangeCount,
+        copyPasteCount: data.copyPasteCount,
+        hardwareDetectedCount: data.hardwareDetectedCount,
+        noFaceDetectedCount: data.noFaceDetectedCount,
+        submissionStatus: data.submissionStatus,
+      })),
+    };
+
+    return res.status(200).json({ exam: formattedExam });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export { createExam, getExams, getExamByCode, getExamDetailsByCode };

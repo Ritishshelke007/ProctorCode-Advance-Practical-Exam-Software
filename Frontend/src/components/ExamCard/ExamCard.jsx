@@ -16,7 +16,7 @@ const ExamCard = ({
 }) => {
   const navigate = useNavigate();
   const handleOnClick = () => {
-    navigate("/admin/dashboard/exam-details");
+    navigate(`/admin/dashboard/exam/${secretCode}`);
   };
 
   return (

@@ -20,6 +20,7 @@ import AddCourse from "./views/admin/add-course/AddCourse";
 import CreateExam from "./views/admin/create-exam/CreateExam";
 import UserContextProvider from "./contexts/UserContextProvider";
 import Courses from "./views/admin/courses/Courses";
+import MonitorExam from "./views/admin/monitor-exam/MonitorExam";
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
@@ -60,6 +61,10 @@ function App() {
           <Route path="/admin/courses" element={<Courses />} />
           <Route path="/admin/add-course" element={<AddCourse />} />
           <Route path="/admin/create-exam" element={<CreateExam />} />
+          <Route
+            path="/admin/dashboard/exam/:examcode"
+            element={<MonitorExam />}
+          />
         </Route>
       </Routes>
     </UserContextProvider>
