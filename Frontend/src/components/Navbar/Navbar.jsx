@@ -16,7 +16,7 @@ import avatar from "../../assets/img/avatars/avatar4.png";
 import { removeFromSession } from "../../common/session";
 
 const Navbar = (props) => {
-  const user = useSelector((state) => state.user.student);
+  const user = useSelector((state) => state.authData.user.student);
   const dispatch = useDispatch();
   console.log(user);
   const navigate = useNavigate();
@@ -192,7 +192,7 @@ const Navbar = (props) => {
               <div className="p-4">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    👋 Hey, {user.name}
+                    👋 Hey,
                   </p>{" "}
                 </div>
               </div>

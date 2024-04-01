@@ -28,4 +28,7 @@ app.use("/exam", examRoutes);
 import facultyRoutes from "./routes/faculty.routes.js";
 app.use("/faculty", facultyRoutes);
 
+import monitorRoutes from "./routes/monitor.routes.js";
+app.use("/monitor", monitorRoutes);
+
 export default app;

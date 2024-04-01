@@ -125,11 +125,21 @@ const MonitorExam = () => {
                   {row.cells.map((cell) => {
                     let data = "";
                     if (cell.column.Header === "Start Time") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {cell.value || "Not Started"}
-                        </p>
-                      );
+                      if (cell.value) {
+                        let starttime = new Date(cell.value);
+                        starttime = starttime.toLocaleTimeString();
+                        data = (
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {starttime || "Not Started"}
+                          </p>
+                        );
+                      } else {
+                        data = (
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {cell.value || "Not Started"}
+                          </p>
+                        );
+                      }
                     } else if (cell.column.Header === "Submission Status") {
                       data = (
                         <div className="flex items-center gap-1">

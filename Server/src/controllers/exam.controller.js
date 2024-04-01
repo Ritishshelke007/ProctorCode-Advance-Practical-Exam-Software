@@ -171,11 +171,75 @@ const getExamByStudent = async (req, res) => {
   try {
     const { year, division, batch } = req.body;
 
-    const exams = await Exam.find({ year, division, batch });
+    const exams = await Exam.find({ year, division, batch }).select(
+      "-monitoringData"
+    );
 
     return res.status(200).json({ exams });
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+const getProblemStatementForStudent = async (req, res) => {
+  try {
+    const examId = req.params["examId"];
+    const studentId = req.params["studentId"];
+    console.log(examId, studentId);
+
+    let exam = await Exam.find({ examCode: examId }).select("monitoringData");
+    exam = exam[0];
+
+    if (!exam) {
+      return res.status(400).json({ message: "Exam not found" });
+    }
+
+    const studentData = exam.monitoringData.find(
+      (data) => data.student == studentId
+    );
+
+    // // Find the monitoring data for the specific student
+    // const monitoringDataForStudent = exam.monitoringData.find(
+    //   (data) => data.student.toString() === studentId
+    // );
+
+    // if (!monitoringDataForStudent) {
+    //   return res
+    //     .status(404)
+    //     .json({ message: "Monitoring data not found for the student" });
+    // }
+
+    // Extract the problem statement for the student
+    //  const problemStatement = monitoringDataForStudent.problemStatement;
+
+    return res.status(200).json(studentData.problemStatement);
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const getMonitoringDataByStudent = async (req, res) => {
+  try {
+    const examId = req.params["examId"];
+    const studentId = req.params["studentId"];
+    console.log(examId, studentId);
+
+    let exam = await Exam.find({ examCode: examId }).select("monitoringData");
+    exam = exam[0];
+
+    if (!exam) {
+      return res.status(400).json({ message: "Exam not found" });
+    }
+
+    const studentData = exam.monitoringData.find(
+      (data) => data.student == studentId
+    );
+
+    return res.status(200).json(studentData);
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -186,4 +250,6 @@ export {
   getExamDetailsByCode,
   getCompletedExams,
   getExamByStudent,
+  getProblemStatementForStudent,
+  getMonitoringDataByStudent,
 };

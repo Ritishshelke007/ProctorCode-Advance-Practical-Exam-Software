@@ -27,6 +27,8 @@ import Home from "./views/student/home/Home";
 import StudentLayout from "./layouts/student";
 import StudentProfile from "./views/student/profile/Profile";
 import StudentCompletedExams from "./views/student/completed-exams/CompletedExams";
+import ExamInstructions from "./views/student/exam-instructions/ExamInstructions";
+import CodeEditor from "./views/student/code-editor/CodeEditor";
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
@@ -60,6 +62,7 @@ function App() {
         <Route path="/signup" element={<StudentSignUp />} />
         <Route path="/admin" element={<FacultySignIn />} />
         <Route path="/admin/signup" element={<FacultySignUp />} />
+        <Route path="/exam/:examcode" element={<CodeEditor />} />
 
         {/* Student routes */}
 
@@ -67,6 +70,7 @@ function App() {
           <Route path="/dashboard" element={<Home />} />
           <Route path="/profile" element={<StudentProfile />} />
           <Route path="/completed-exams" element={<StudentCompletedExams />} />
+          <Route path="/exam-instructions" element={<ExamInstructions />} />
         </Route>
 
         {/* Admin routes */}

@@ -57,6 +57,9 @@ const examSchema = new Schema(
           type: Schema.Types.ObjectId,
           ref: "Student",
         },
+        problemStatement: {
+          type: String,
+        },
         startTime: {
           type: Date,
         },
@@ -94,9 +97,14 @@ examSchema.pre("save", async function (next) {
       batch: this.batch,
     });
 
-    const monitoringData = students.map((student) => {
+    const shuffledProblemStatements = shuffle(this.problemStatements);
+
+    const monitoringData = students.map((student, index) => {
+      const problemStatement =
+        shuffledProblemStatements[index % shuffledProblemStatements.length];
       return {
         student: student._id,
+        problemStatement,
         startTime: null,
         tabChangeCount: 0,
         copyPasteCount: 0,
@@ -112,5 +120,14 @@ examSchema.pre("save", async function (next) {
     next(error);
   }
 });
+
+function shuffle(array) {
+  // Fisher-Yates shuffle algorithm
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 export const Exam = mongoose.model("Exam", examSchema);
