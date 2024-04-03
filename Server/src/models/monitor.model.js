@@ -29,6 +29,14 @@ const monitorSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    result: {
+      resultCode: {
+        type: String,
+      },
+      resultOutput: {
+        type: String,
+      },
+    },
   },
 
   { timestamps: true }

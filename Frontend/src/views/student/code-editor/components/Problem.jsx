@@ -11,20 +11,19 @@ const Problem = ({ ps }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [activity, setActivity] = useState("");
-  const student = useSelector((state) => state.authData.user.student);
   const monitoringData = useSelector((state) => state.monitoringData.monitor);
+  const student = useSelector((state) => state.authData.user.student);
+
   const allotedProblemStatement = ps;
   const [output, setOutput] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { examCode } = useParams();
+  const examId = useSelector((state) => state.currentExamData.examId);
   console.log(monitoringData.problemStatement);
-  const code = useSelector((state) => state.codeEditorData.code);
 
   const handleEndExam = () => {
     setOpen(true);
     setActivity("endExam");
-
-    dispatch(setCode(code));
+    // dispatch(setCode(""));
   };
 
   return (

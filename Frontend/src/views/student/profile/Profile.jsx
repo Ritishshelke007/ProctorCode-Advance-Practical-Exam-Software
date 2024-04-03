@@ -6,24 +6,23 @@ import avatar from "../../../assets/img/avatars/avatar4.png";
 import { useSelector } from "react-redux";
 
 const Profile = () => {
-  const student = useSelector((state) => state.user.student);
+  const [student, setStudent] = useState({});
   const date = new Date(student.createdAt);
   const joinedDate = date.toLocaleDateString("hi-IN");
-  //   const [profile, setProfile] = useState({});
 
-  //   useEffect(() => {
-  //     axios.defaults.withCredentials = true;
+  useEffect(() => {
+    axios.defaults.withCredentials = true;
 
-  //     axios
-  //       .get("http://localhost:3000/faculty/get-profile")
-  //       .then((res) => {
-  //         console.log(res.data.faculty);
-  //         setProfile(res.data.faculty);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }, []);
+    axios
+      .post(import.meta.env.VITE_SERVER_DOMAIN + "/student/get-student-profile")
+      .then(({ data }) => {
+        console.log(data);
+        setStudent(data.student);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="flex w-full flex-col gap-10">
@@ -47,10 +46,10 @@ const Profile = () => {
             {/* Name and position */}
             <div className="mt-16 flex flex-col items-center">
               <h4 className="text-xl font-bold text-navy-700 dark:text-white">
-                Ritish
+                {student.name}
               </h4>
               <p className="text-base font-normal text-gray-600">
-                ritish@gmail.com
+                {student.email}
               </p>
             </div>
 

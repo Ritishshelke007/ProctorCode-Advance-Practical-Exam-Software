@@ -2,15 +2,11 @@ import React from "react";
 import ExamCard from "../../../components/ExamCard/ExamCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import UserContext from "../../../contexts/UserContext";
 
 const ExamDashboard = () => {
   const [exams, setExams] = useState([]);
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(true);
-  let { user, setUser } = React.useContext(UserContext);
-
-  console.log(user);
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
@@ -53,33 +49,6 @@ const ExamDashboard = () => {
               </div>
             );
           })}
-          {/* <ExamCard
-            courseName="Data Structures And Algorithms"
-            courseCode="123456"
-            secretCode="856584"
-            examDateTime="24/03/2024 12:00 PM"
-            year="TY BTECH"
-            division="A"
-            status="Starts on 24/03/2024 2:00 PM"
-          />
-          <ExamCard
-            courseName="DSA"
-            courseCode="CS-101"
-            secretCode="748596"
-            examDateTime="12/04/2023 12:00 PM"
-            year="TY BTECH"
-            division="A"
-            status="Starts on 12/04/2023 12:00 PM"
-          />
-          <ExamCard
-            courseName="Computer Networks"
-            courseCode="CS-102"
-            secretCode="856584"
-            examDateTime="12/04/2023 12:00 PM"
-            year="TY BTECH"
-            division="A"
-            status="Starts on 13/04/2023 2:00 PM"
-          /> */}
         </div>
       </div>
     </div>

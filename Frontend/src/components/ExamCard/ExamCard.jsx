@@ -21,7 +21,7 @@ const ExamCard = ({
 
   return (
     <Card
-      extra={`flex h-[290px] flex-col w-full h-full !p-4 3xl:p-![18px] bg-white ${extra}`}
+      extra={`flex h-[290px] flex-col w-full h-full !p-4 3xl:p-![18px] bg-white ${extra} `}
       key={key}
     >
       <div className="h-full w-full">

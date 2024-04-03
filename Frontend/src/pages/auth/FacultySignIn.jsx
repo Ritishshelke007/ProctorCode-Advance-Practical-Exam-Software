@@ -40,12 +40,12 @@ export default function FacultySignIn() {
         password,
       })
       .then(({ data }) => {
+        navigate("/admin/dashboard", { replace: true });
         console.log(data);
         toast.success("Faculty logged in successfully");
         storeInSession("user", JSON.stringify(data));
         console.log(sessionStorage);
         setUser(data);
-        navigate("/admin/dashboard");
       })
       .catch((error) => {
         console.log(error);

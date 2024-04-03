@@ -31,7 +31,7 @@ import { Student } from "../models/student.model.js";
 
 // export { verifyJWT, formatDataToSend };
 
-export const verifyJWT = async (req, res, next) => {
+export const verifyJWTStudent = async (req, res, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
@@ -41,10 +41,7 @@ export const verifyJWT = async (req, res, next) => {
       return res.status(401).json({ error: "No access token" });
     }
 
-    const decodedToken = await jwt.verify(
-      token,
-      process.env.SECRECT_ACCESS_KEY
-    );
+    const decodedToken = await jwt.verify(token, process.env.SECRET_ACCESS_KEY);
 
     const student = await Student.findById(decodedToken._id).select(
       "-password -refreshToken"

@@ -8,6 +8,8 @@ import {
   setLanguage,
 } from "../../../../features/code-editor/codeEditorSlice.js";
 import Modal from "../../../../components/Modal/Modal.jsx";
+import axios from "axios";
+import { setMonitoringData } from "../../../../features/monitoring-data/monitorDataSlice.js";
 
 const EditorWindow = () => {
   const [activity, setActivity] = useState("");
@@ -15,6 +17,9 @@ const EditorWindow = () => {
 
   const editorRef = useRef(null);
   const dispatch = useDispatch();
+
+  const examId = useSelector((state) => state.currentExamData.examId);
+  const studentId = useSelector((state) => state.authData.user.student._id);
 
   const { language, code } = useSelector((state) => state.codeEditorData);
   console.log(language, code);
@@ -29,11 +34,6 @@ const EditorWindow = () => {
     dispatch(setCode(CODE_SNIPPETS[selectedLanguage]));
     console.log(code);
   };
-
-  // const onMount = (editor) => {
-  //   editorRef.current = editor;
-  //   editor.focus();
-  // };
 
   const options = {
     selectOnLineNumbers: true,
@@ -77,6 +77,51 @@ const EditorWindow = () => {
   //   // };
   // }, [setOpen]);
 
+  const onMount = (editor, monaco) => {
+    editorRef.current = editor;
+    editor.focus();
+    console.log("in on mount, ");
+
+    editor.onKeyDown((event) => {
+      const { keyCode, ctrlKey, metaKey } = event;
+      console.log(keyCode);
+      if ((keyCode === 33 || keyCode === 52) && (metaKey || ctrlKey)) {
+        event.preventDefault();
+        setActivity("copypaste");
+        setOpen(true);
+
+        axios
+          .post(
+            `http://localhost:3000/monitor/update-count/${examId}/${studentId}`,
+            {
+              activity: "copyPasteCount",
+            }
+          )
+          .then(({ data }) => {
+            dispatch(setMonitoringData(data.studentData));
+            console.log("Copy paste count increased");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    });
+
+    monaco.editor.registerCommand(
+      "editor.action.clipboardCopyAction",
+      () => {}
+    );
+
+    // Disable cut command
+    monaco.editor.registerCommand("editor.action.clipboardCutAction", () => {});
+
+    // Disable paste command
+    monaco.editor.registerCommand(
+      "editor.action.clipboardPasteAction",
+      () => {}
+    );
+  };
+
   return (
     <>
       <div>
@@ -105,7 +150,10 @@ const EditorWindow = () => {
           onSelectChange={onSelectChange}
         />
 
-        <div className="overlay overflow-hidden w-full h-full shadow-4xl">
+        <div
+          className="overlay overflow-hidden w-full h-full shadow-4xl"
+          // onKeyDown={handleKeyDown}
+        >
           <Editor
             height="85vh"
             width="100vw"
@@ -115,9 +163,7 @@ const EditorWindow = () => {
             defaultValue={CODE_SNIPPETS[language]}
             value={code}
             onChange={(value) => dispatch(setCode(value))}
-            onMount={(editor, monaco) => {
-              editorRef.current = editor;
-            }}
+            onMount={onMount}
           />
         </div>
       </div>

@@ -14,6 +14,7 @@ const OutputWindow = () => {
   const [isError, setIsError] = useState(false);
   const [codeResult, setCodeResult] = useState({});
   const { examCode } = useParams();
+  const codeOutput = useSelector((state) => state.resultData.codeOutput);
 
   const sourceCode = useSelector((state) => state.codeEditorData.code);
   const language = useSelector((state) => state.codeEditorData.language);
@@ -29,7 +30,6 @@ const OutputWindow = () => {
       const { run: result } = await executeCode(language, sourceCode);
       setOutput(result.output);
       setCodeResult(result);
-      console.log(result.output);
       result.stderr ? setIsError(true) : setIsError(false);
     } catch (error) {
       toast.error("An error occurred while running the code");
@@ -40,8 +40,10 @@ const OutputWindow = () => {
   };
 
   useEffect(() => {
-    dispatch(setCodeOutput(codeResult));
-  }, [codeResult]);
+    dispatch(setCodeOutput(output));
+    console.log(codeOutput);
+    console.log(output);
+  }, [output]);
 
   return (
     <>

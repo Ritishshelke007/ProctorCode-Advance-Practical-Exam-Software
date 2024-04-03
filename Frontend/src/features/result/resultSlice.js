@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   code: "",
-  codeOutput: {},
+  codeOutput: "",
 };
 
 export const resultSlice = createSlice({

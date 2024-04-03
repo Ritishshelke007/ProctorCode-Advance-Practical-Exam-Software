@@ -20,6 +20,8 @@ const CreateExam = () => {
   const [enableVideoProctoring, setEnableVideoProctoring] = useState(false);
   const [enableAudioProctoring, setEnableAudioProctoring] = useState(false);
   const [courses, setCourses] = useState([]);
+  const [selectedDivision, setSelectedDivision] = useState("A");
+  const [availableBatches, setAvailableBatches] = useState([]);
 
   const handleSwitchChange = (e) => {
     const { name, checked } = e.target;
@@ -143,6 +145,38 @@ const CreateExam = () => {
     }
   };
 
+  useEffect(() => {
+    if (selectedDivision === "A") {
+      setAvailableBatches([
+        { value: "A1", label: "A1" },
+        { value: "A2", label: "A2" },
+        { value: "A3", label: "A3" },
+        { value: "A4", label: "A4" },
+      ]);
+    } else if (selectedDivision === "B") {
+      setAvailableBatches([
+        { value: "B1", label: "B1" },
+        { value: "B2", label: "B2" },
+        { value: "B3", label: "B3" },
+        { value: "B4", label: "B4" },
+      ]);
+    } else if (selectedDivision === "C") {
+      setAvailableBatches([
+        { value: "C1", label: "C1" },
+        { value: "C2", label: "C2" },
+        { value: "C3", label: "C3" },
+        { value: "C4", label: "C4" },
+      ]);
+    } else if (selectedDivision === "D") {
+      setAvailableBatches([
+        { value: "D1", label: "D1" },
+        { value: "D2", label: "D2" },
+        { value: "D3", label: "D3" },
+        { value: "D4", label: "D4" },
+      ]);
+    }
+  }, [selectedDivision]);
+
   return (
     <div className="mt-3 grid h-full grid-cols-1 gap-5 xl:grid-cols-1 2xl:grid-cols-1">
       <div className="col-span-1 h-fit w-full xl:col-span-1 2xl:col-span-2">
@@ -232,13 +266,14 @@ const CreateExam = () => {
                   name="division"
                   options={divisionOptions}
                   extra="mb-3"
+                  onChange={(e) => setSelectedDivision(e.target.value)}
                 />
 
                 <SelectField
                   label="Select Batch*"
                   id="batch"
                   name="batch"
-                  options={batchOptions}
+                  options={availableBatches}
                   extra="mb-3"
                 />
               </div>

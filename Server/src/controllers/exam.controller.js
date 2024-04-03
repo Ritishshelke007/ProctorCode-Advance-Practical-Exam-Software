@@ -62,7 +62,9 @@ const getExams = async (req, res) => {
     const { _id } = req.user;
     const user = await Faculty.findById(_id).populate("exams");
 
-    const exams = user.exams.map((exam) => {
+    const sortedExams = user.exams.sort((a, b) => b.createdAt - a.createdAt);
+
+    const exams = sortedExams.map((exam) => {
       const examData = exam.toObject();
       const createdAtDate = new Date(examData.createdAt);
       // Format date to desired format
@@ -170,10 +172,19 @@ const getCompletedExams = async (req, res) => {
 const getExamByStudent = async (req, res) => {
   try {
     const { year, division, batch } = req.body;
+    const studentId = req.student._id;
 
-    const exams = await Exam.find({ year, division, batch }).select(
-      "-monitoringData"
-    );
+    const exams = await Exam.find({
+      year,
+      division,
+      batch,
+      monitoringData: {
+        $elemMatch: {
+          student: studentId,
+          submissionStatus: false,
+        },
+      },
+    }).select("-monitoringData");
 
     return res.status(200).json({ exams });
   } catch (error) {
@@ -243,6 +254,29 @@ const getMonitoringDataByStudent = async (req, res) => {
   }
 };
 
+const getCompletedExamByStudent = async (req, res) => {
+  try {
+    const { year, division, batch } = req.body;
+    const studentId = req.student._id;
+
+    const exams = await Exam.find({
+      year,
+      division,
+      batch,
+      monitoringData: {
+        $elemMatch: {
+          student: studentId,
+          submissionStatus: true,
+        },
+      },
+    }).select("-monitoringData");
+
+    return res.status(200).json({ exams });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
 export {
   createExam,
   getExams,
@@ -252,4 +286,5 @@ export {
   getExamByStudent,
   getProblemStatementForStudent,
   getMonitoringDataByStudent,
+  getCompletedExamByStudent,
 };

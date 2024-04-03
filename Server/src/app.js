@@ -31,4 +31,7 @@ app.use("/faculty", facultyRoutes);
 import monitorRoutes from "./routes/monitor.routes.js";
 app.use("/monitor", monitorRoutes);
 
+import studentRoutes from "./routes/student.routes.js";
+app.use("/student", studentRoutes);
+
 export default app;

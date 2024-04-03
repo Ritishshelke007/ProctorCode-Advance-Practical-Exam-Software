@@ -15,7 +15,7 @@ export default function StudentSignUp() {
     const { email, prn, name, year, division, batch, password } =
       e.target.elements;
     axios
-      .post("http://localhost:3001/student", {
+      .post("http://localhost:3000/auth/student/signup", {
         email: email.value,
         prn: prn.value,
         name: name.value,
@@ -25,7 +25,7 @@ export default function StudentSignUp() {
         password: password.value,
       })
       .then(({ data }) => {
-        console.log(response.data);
+        console.log(data);
         toast.success("Student registered successfully");
         storeInSession("user", JSON.stringify(data));
         setUserAuth(data);

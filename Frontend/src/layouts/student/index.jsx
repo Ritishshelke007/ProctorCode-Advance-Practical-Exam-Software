@@ -86,10 +86,10 @@ const StudentLayout = (props) => {
               secondary={getActiveNavbar(adminRoutes)}
               {...rest}
             />
-            {<Outlet />}
-            <div className="p-3">
+            <div className="min-h-[620px]">{<Outlet />}</div>
+            {/* <div className="p-3">
               <div>Footer</div>
-            </div>
+            </div> */}
           </div>
         </main>
       </div>

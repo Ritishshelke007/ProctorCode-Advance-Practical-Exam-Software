@@ -83,6 +83,14 @@ const examSchema = new Schema(
           type: Boolean,
           default: false,
         },
+        result: {
+          resultCode: {
+            type: String,
+          },
+          resultOutput: {
+            type: String,
+          },
+        },
       },
     ],
   },
@@ -111,6 +119,10 @@ examSchema.pre("save", async function (next) {
         hardwareDetectedCount: 0,
         noFaceDetectedCount: 0,
         submissionStatus: false,
+        result: {
+          resultCode: "",
+          resultOutput: "",
+        },
       };
     });
 

@@ -1,4 +1,5 @@
 import { Exam } from "../models/exam.model.js";
+import { Student } from "../models/student.model.js";
 
 const updateActivityCount = async (req, res) => {
   try {
@@ -35,8 +36,10 @@ const updateActivityCount = async (req, res) => {
 
 const updateSubmitStatus = async (req, res) => {
   try {
-    const examCode = req.params["examCode"];
-    const studentId = req.params["studentId"];
+    // const examCode = req.params["examCode"];
+    // const studentId = req.params["studentId"];
+
+    const { examCode, studentId } = req.body;
 
     const updatedExam = await Exam.findOneAndUpdate(
       { examCode, "monitoringData.student": studentId },
@@ -58,7 +61,7 @@ const updateSubmitStatus = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Exam ended successfully for student", studentData });
+      .json({ message: "Exam ended successfully", studentData });
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });
@@ -90,4 +93,62 @@ const updateStartTime = async (req, res) => {
   }
 };
 
-export { updateActivityCount, updateSubmitStatus, updateStartTime };
+const examSubmission = async (req, res) => {
+  try {
+    const examCode = req.params["examCode"];
+    const studentId = req.params["studentId"];
+
+    const { resultCode, resultOutput } = req.body;
+
+    // Update the monitoring data in the exam document
+    const updatedExam = await Exam.findOneAndUpdate(
+      { examCode, "monitoringData.student": studentId },
+      {
+        $set: {
+          "monitoringData.$.result": { resultCode, resultOutput },
+        },
+      },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedExam) {
+      return res.status(404).json({ message: "Exam or student not found" });
+    }
+
+    return res.status(200).json({ exam: updatedExam });
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const viewSubmission = async (req, res) => {
+  try {
+    const examCode = req.params["examCode"];
+    const prn = req.params["prn"];
+
+    const student = await Student.findOne({ prn });
+
+    const submissionData = await Exam.findOne({
+      examCode,
+      "monitoringData.student": student._id,
+    }).select("monitoringData.result");
+
+    if (!submissionData || !submissionData.monitoringData[0]) {
+      return res.status(404).json({ error: "Submission data not found" });
+    }
+
+    return res.status(200).json(submissionData.monitoringData[0].result);
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export {
+  updateActivityCount,
+  updateSubmitStatus,
+  updateStartTime,
+  examSubmission,
+  viewSubmission,
+};

@@ -30,6 +30,8 @@ export default function Modal({ activity, open, onClose, children }) {
                   ? "Copy Paste Activity"
                   : activity === "endExam"
                   ? "End Exam"
+                  : activity === "copypaste"
+                  ? "Copy Paste Activity"
                   : "Fullscreen Activity"}
               </h3>
               <p className="text-md text-gray-700 font-semibold">
@@ -39,6 +41,8 @@ export default function Modal({ activity, open, onClose, children }) {
                   ? "Copy paste activity has been notified to faculty"
                   : activity === "endExam"
                   ? "Are you sure to end exam ?"
+                  : activity === "copypaste"
+                  ? "Copy paste activity has been notified to faculty"
                   : "You have entered fullscreen"}
               </p>
               <p className="text-md text-gray-700 font-semibold">
@@ -48,6 +52,8 @@ export default function Modal({ activity, open, onClose, children }) {
                   ? "On Next copy paste your exam will be terminated"
                   : activity === "endExam"
                   ? "Your code and output will be shared with faculty"
+                  : activity === "copypaste"
+                  ? "On Next copy paste your exam will be terminated"
                   : "You have entered fullscreen"}
               </p>
             </div>

@@ -99,37 +99,6 @@ const ExamInstructions = () => {
         </div>
       </div>
 
-      <div>
-        <button
-          onClick={() => setOpen(true)}
-          className="p-3 mt-8 rounded-lg ml-2 bg-blueSecondary text-white hover:bg-blueSecondary/90"
-        >
-          Open Modal
-        </button>
-
-        <Modal open={open} onClose={() => setOpen(false)}>
-          <div className="text-center w-full">
-            <div className="mx-auto my-4 w-full">
-              <h3 className="text-lg font-black text-gray-800">
-                Confirm Delete Confirm Delete Confirm Delete Confirm Deletes
-              </h3>
-              <p className="text-sm text-gray-500">
-                Are you sure you want to delete this item?
-              </p>
-            </div>
-            <div className="flex gap-4">
-              <button className="btn btn-danger w-full">Delete</button>
-              <button
-                className="btn btn-light w-full"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </Modal>
-      </div>
-
       {error && (
         <p className="text-red-500 absolute bottom-5 left-7">{error}</p>
       )}

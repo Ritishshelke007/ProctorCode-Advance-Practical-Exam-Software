@@ -2,12 +2,56 @@ import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { IoWarning } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
+import { setCode } from "../../features/code-editor/codeEditorSlice";
+import axios from "axios";
+import { setCodeOutput } from "../../features/result/resultSlice";
 
 export default function EndExamModal({ activity, open, onClose, children }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const student = useSelector((state) => state.authData.user.student);
+  const examId = useSelector((state) => state.currentExamData.examId);
+  const code = useSelector((state) => state.codeEditorData.code);
+  const resultOutput = useSelector((state) => state.resultData.codeOutput);
+
   const handleClick = () => {
-    console.log("End Exam");
-    navigate("/dashboard", { replace: true });
+    const examCode = examId;
+    const studentId = student._id;
+
+    dispatch(setCode(code));
+
+    console.log(code);
+
+    axios
+      .post(
+        import.meta.env.VITE_SERVER_DOMAIN +
+          `/monitor/exam-submission/${examCode}/${studentId}`,
+        {
+          resultCode: code,
+          resultOutput,
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios
+      .post(import.meta.env.VITE_SERVER_DOMAIN + "/monitor/submit-exam", {
+        examCode,
+        studentId,
+      })
+      .then(({ data }) => {
+        console.log(data);
+        navigate("/dashboard", { replace: true });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
   return (
     <div>
@@ -40,8 +84,8 @@ export default function EndExamModal({ activity, open, onClose, children }) {
 
             <button
               className="text-white bg-red-500 p-3 rounded-lg w-full flex justify-center items-center gap-2"
+              // onClick={ }
               onClick={handleClick}
-              //  onClick={handleClick}
             >
               {<IoWarning />} Confirm End Exam
             </button>
