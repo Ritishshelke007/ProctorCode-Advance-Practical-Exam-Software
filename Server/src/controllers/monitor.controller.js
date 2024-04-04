@@ -128,17 +128,35 @@ const viewSubmission = async (req, res) => {
     const prn = req.params["prn"];
 
     const student = await Student.findOne({ prn });
+    console.log(student._id);
+
+    // const submissionData = await Exam.findOne({
+    //   examCode,
+    //   "monitoringData.student": student._id,
+    // });
 
     const submissionData = await Exam.findOne({
       examCode,
       "monitoringData.student": student._id,
-    }).select("monitoringData.result");
+    });
 
     if (!submissionData || !submissionData.monitoringData[0]) {
       return res.status(404).json({ error: "Submission data not found" });
     }
 
-    return res.status(200).json(submissionData.monitoringData[0].result);
+    // Find the submission data for the specific student
+    const studentSubmission = submissionData.monitoringData.find(
+      (data) => data.student.toString() === student._id.toString()
+    );
+
+    // Return the submission data for the particular student
+    return res.status(200).json(studentSubmission.result);
+
+    // if (!submissionData || !submissionData.monitoringData[0]) {
+    //   return res.status(404).json({ error: "Submission data not found" });
+    // }
+
+    // return res.status(200).json(student._id);
   } catch (error) {
     console.error("Error:", error);
     return res.status(500).json({ message: "Internal server error" });

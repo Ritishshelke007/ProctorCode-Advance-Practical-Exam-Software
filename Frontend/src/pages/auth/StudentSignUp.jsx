@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { storeInSession } from "../../common/session";
 
 export default function StudentSignUp() {
+  const navigate = useNavigate();
   //   let {
   //     userAuth: { access_token },
   //     setUserAuth,
@@ -29,6 +30,7 @@ export default function StudentSignUp() {
         toast.success("Student registered successfully");
         storeInSession("user", JSON.stringify(data));
         setUserAuth(data);
+        navigate("/signin", { replace: true });
       })
       .catch((error) => {
         console.log(error);
