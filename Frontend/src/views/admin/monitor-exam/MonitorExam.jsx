@@ -129,7 +129,9 @@ const MonitorExam = () => {
           <div className="mx-auto pt-5 w-full grid grid-cols-2 justify-between items-start">
             <div className="text-lg font-black text-gray-800 border-r-2 border-gray-700 ">
               <h3>Code</h3>
-              <pre className="text-md text-gray-700 font-semibold">{code}</pre>
+              <pre className="text-md text-gray-800 font-semibold text-start">
+                {code}
+              </pre>
             </div>
             <div className="text-lg font-black text-gray-800">
               <h3>Output</h3>

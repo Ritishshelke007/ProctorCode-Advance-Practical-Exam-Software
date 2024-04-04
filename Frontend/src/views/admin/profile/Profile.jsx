@@ -26,7 +26,6 @@ const Profile = () => {
       <div className="w-ful mt-3 flex h-fit gap-5">
         <div className="lg:!mb-0">
           <Card extra={"items-center w-[350px] h-full p-[16px] bg-cover"}>
-            {/* Background and profile */}
             <div
               className="relative mt-1 flex h-32 w-full justify-center rounded-xl bg-cover"
               style={{ backgroundImage: `url(${banner})` }}
