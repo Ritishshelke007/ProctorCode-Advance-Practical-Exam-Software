@@ -50,9 +50,9 @@ const AdminLayout = (props) => {
   const location = useLocation();
 
   const navigate = useNavigate();
-  let {
-    user: { accessToken },
-  } = useContext(UserContext);
+  // let {
+  //   user: { accessToken },
+  // } = useContext(UserContext);
   const [open, setOpen] = React.useState(true);
   const [currentRoute, setCurrentRoute] = React.useState("Dashboard");
 
@@ -104,9 +104,7 @@ const AdminLayout = (props) => {
       }
     });
   };
-  return accessToken ? (
-    <Navigate to="/admin/dashboard" />
-  ) : (
+  return (
     <div className="flex h-full w-full">
       <Sidebar open={open} onClose={() => setOpen(false)} />
       {/* Navbar & Main Content */}

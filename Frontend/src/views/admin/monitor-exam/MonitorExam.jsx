@@ -133,7 +133,7 @@ const MonitorExam = () => {
             </div>
             <div className="text-lg font-black text-gray-800">
               <h3>Output</h3>
-              <pre className="text-md text-gray-700 font-semibold">
+              <pre className="text-md text-gray-900 font-semibold text-start">
                 {output}
               </pre>
             </div>

@@ -7,9 +7,7 @@ import UserContext from "../../../contexts/UserContext";
 const CompletedExams = () => {
   const [exams, setExams] = useState([]);
   const [loading, setLoading] = useState(true);
-  let { user, setUser } = React.useContext(UserContext);
-
-  console.log(user);
+  // let { user, setUser } = React.useContext(UserContext);
 
   useEffect(() => {
     axios

@@ -25,7 +25,7 @@ const Navbar = (props) => {
 
   const handleLogout = () => {
     removeFromSession("user");
-    navigate("/admin");
+    navigate("/signin");
     console.log(sessionStorage);
     dispatch(clearUser());
 

@@ -5,16 +5,10 @@ import axios from "axios";
 import InputField from "../../components/InputField/InputField";
 import { storeInSession } from "../../common/session";
 import { Navigate, useNavigate } from "react-router-dom";
-import UserContext from "../../contexts/UserContext";
 
 export default function FacultySignIn() {
   const formRef = useRef();
   const navigate = useNavigate();
-
-  let {
-    user: { accessToken },
-    setUser,
-  } = useContext(UserContext);
 
   const handleStudentLogin = (e) => {
     e.preventDefault();
@@ -52,9 +46,7 @@ export default function FacultySignIn() {
         toast.error(error.response.data.message);
       });
   };
-  return accessToken ? (
-    navigate("/dashboard")
-  ) : (
+  return (
     <div className="mt-16 mb-16 flex h-full w-full gap-10 justify-center items-center">
       {/* Sign in section */}
       <div className="mt-[10vh] w-fit max-w-full flex-col items-center shadow-md p-10 border">
