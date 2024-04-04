@@ -74,17 +74,13 @@ export default function EndExamModal({ activity, open, onClose, children }) {
           <div className="text-center w-full h-52 z-50 flex justify-center items-center flex-col gap-5">
             <div className="mx-auto my-4 w-full">
               <h3 className="text-lg font-black text-gray-800">
-                {activity === "goBack" ? "Action restricted " : "End Exam"}
+                "End Exam Confirmation"
               </h3>
               <p className="text-md text-gray-700 font-semibold">
-                {activity === "goBack"
-                  ? "You can't go back once exam is started"
-                  : " Are you sure to end exam ?"}
+                Are you sure you want to end the exam?
               </p>
               <p className="text-md text-gray-700 font-semibold">
-                {activity === "endExam"
-                  ? "Ending the exam will share your code and output with faculty"
-                  : "To proceed click on confirm button"}
+                Your code and output will be shared with faculty
               </p>
             </div>
 

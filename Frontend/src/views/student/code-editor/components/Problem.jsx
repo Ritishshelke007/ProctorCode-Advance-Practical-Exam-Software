@@ -6,11 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import Modal from "../../../../components/Modal/Modal";
 import { setCode } from "../../../../features/result/resultSlice";
 import EndExamModal from "../../../../components/Modal/EndExam";
+import { useNavigate } from "react-router-dom";
 
 const Problem = ({ ps }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [activity, setActivity] = useState("");
+  const navigate = useNavigate();
   const monitoringData = useSelector((state) => state.monitoringData.monitor);
   const student = useSelector((state) => state.authData.user.student);
 
@@ -21,8 +23,9 @@ const Problem = ({ ps }) => {
   console.log(monitoringData.problemStatement);
 
   const handleEndExam = () => {
-    setOpen(true);
-    setActivity("endExam");
+    navigate("/dashboard", { replace: true });
+    // setOpen(true);
+    // setActivity("endExam");
     // dispatch(setCode(""));
   };
 
