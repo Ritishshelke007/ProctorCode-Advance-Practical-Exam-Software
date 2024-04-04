@@ -53,18 +53,100 @@ import CodeEditor from "./views/student/code-editor/CodeEditor";
 //   )
 // );
 
+const router = createBrowserRouter([
+  {
+    path: "/signin",
+    element: <SignIn />,
+  },
+  {
+    path: "/signup",
+    element: <StudentSignUp />,
+  },
+  {
+    path: "/admin",
+    element: <FacultySignIn />,
+  },
+  {
+    path: "/admin/signup",
+    element: <FacultySignUp />,
+  },
+  {
+    path: "/exam/:examcode",
+    element: <CodeEditor />,
+  },
+  {
+    path: "/",
+    element: <StudentLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "dashboard",
+        element: <Home />,
+      },
+      {
+        path: "/profile",
+        element: <StudentProfile />,
+      },
+      {
+        path: "/completed-exams",
+        element: <StudentCompletedExams />,
+      },
+      {
+        path: "/exam-instructions",
+        element: <ExamInstructions />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin/dashboard",
+        element: <ExamDashboard />,
+      },
+      {
+        path: "/admin/courses",
+        element: <Courses />,
+      },
+      {
+        path: "/admin/add-course",
+        element: <AddCourse />,
+      },
+      {
+        path: "/admin/create-exam",
+        element: <CreateExam />,
+      },
+      {
+        path: "/admin/dashboard/exam/:examcode",
+        element: <MonitorExam />,
+      },
+      {
+        path: "/admin/previous-exams",
+        element: <CompletedExams />,
+      },
+      {
+        path: "/admin/profile",
+        element: <Profile />,
+      },
+    ],
+  },
+]);
+
 function App() {
-  return (
-    <UserContextProvider>
-      <Routes>
-        {/* Public routes */}
+  return <RouterProvider router={router} />;
+  // <UserContextProvider>
+  {
+    /* <Routes>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<StudentSignUp />} />
         <Route path="/admin" element={<FacultySignIn />} />
         <Route path="/admin/signup" element={<FacultySignUp />} />
         <Route path="/exam/:examcode" element={<CodeEditor />} />
 
-        {/* Student routes */}
 
         <Route path="/" element={<StudentLayout />}>
           <Route path="/dashboard" element={<Home />} />
@@ -73,7 +155,6 @@ function App() {
           <Route path="/exam-instructions" element={<ExamInstructions />} />
         </Route>
 
-        {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="/admin/dashboard" element={<ExamDashboard />} />
           <Route path="/admin/courses" element={<Courses />} />
@@ -86,9 +167,10 @@ function App() {
           <Route path="/admin/previous-exams" element={<CompletedExams />} />
           <Route path="/admin/profile" element={<Profile />} />
         </Route>
-      </Routes>
-    </UserContextProvider>
-  );
+      </Routes> */
+  }
+
+  //   </UserContextProvider>
 }
 
 export default App;

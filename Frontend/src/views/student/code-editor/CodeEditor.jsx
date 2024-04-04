@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import OutputWindow from "./components/OutputWindow";
 import Problem from "./components/Problem";
-import LanguageSelector from "./components/LanguageSelector";
 import EditorWindow from "./components/EditorWindow";
 import SplitterLayout from "react-splitter-layout-react-v18";
 import "react-splitter-layout-react-v18/lib/index.css";
@@ -9,6 +8,9 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Modal from "../../../components/Modal/Modal";
 import { setMonitoringData } from "../../../features/monitoring-data/monitorDataSlice";
+import ReactRouterPrompt from "react-router-prompt";
+import EndExamModal from "../../../components/Modal/EndExam";
+import { setCode } from "../../../features/result/resultSlice";
 
 const CodeEditor = () => {
   const [open, setOpen] = useState(false);
@@ -18,11 +20,8 @@ const CodeEditor = () => {
   const studentId = useSelector((state) => state.authData.user.student._id);
   const [problemStatement, setProblemStatement] = useState("");
   const [tabChanges, setTabChanges] = useState(0);
-  // const handleTabChange = () => {
-  //   //     setActivity("tabChangeCount");
-  //   //     setOpen(true);
-  //   console.log("Tab Change Detected");
-  // };
+  const code = useSelector((state) => state.codeEditorData.code);
+  const resultOutput = useSelector((state) => state.resultData.codeOutput);
 
   useEffect(() => {
     axios
@@ -133,24 +132,75 @@ const CodeEditor = () => {
 
   return (
     <>
-      <Modal activity={activity} open={open} onClose={() => setOpen(false)}>
-        {/* Content of your modal */}
-        <div className="text-center w-full h-52 z-50 flex justify-center items-center flex-col gap-10">
-          <div className="mx-auto my-4 w-full">
-            <h3 className="text-lg font-black text-gray-800">Submitted Code</h3>
-            <p className="text-md text-gray-700 font-semibold">
-              Tab change activity will be notified to faculty
-            </p>
-          </div>
+      <ReactRouterPrompt
+        when={({ currentLocation, nextLocation }) =>
+          currentLocation.pathname !== nextLocation.pathname
+        }
+        beforeConfirm={async () => {
+          const examCode = examId;
+          dispatch(setCode(code));
 
-          <button
-            className="text-white bg-blueSecondary p-3 rounded-lg w-full"
-            //  onClick={handleClick}
+          axios
+            .post(
+              import.meta.env.VITE_SERVER_DOMAIN +
+                `/monitor/exam-submission/${examCode}/${studentId}`,
+              {
+                resultCode: code,
+                resultOutput,
+              }
+            )
+            .then(({ data }) => {
+              console.log(data);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+          axios
+            .post(import.meta.env.VITE_SERVER_DOMAIN + "/monitor/submit-exam", {
+              examCode,
+              studentId,
+            })
+            .then(({ data }) => {
+              console.log(data);
+              navigate("/dashboard", { replace: true });
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        }}
+      >
+        {({ isActive, onConfirm, onCancel }) => (
+          <EndExamModal
+            activity="goBack"
+            open="true"
+            onClose={() => setOpen(false)}
           >
-            Enter Fullscreen
-          </button>
-        </div>
-      </Modal>
+            <div className="flex justify-center items-center w-full gap-5">
+              <button
+                className="text-white bg-green-600 p-3 rounded-lg w-full flex justify-center items-center gap-2"
+                onClick={onCancel}
+              >
+                Back to exam
+              </button>
+
+              <button
+                className="text-white bg-red-500 p-3 rounded-lg w-full flex justify-center items-center gap-2"
+                // onClick={ }
+                onClick={onConfirm}
+              >
+                {activity === "endExam" ? <IoWarning /> : ""}
+                {activity === "endExam" ? "Confirm End Exam" : "End Exam"}
+              </button>
+            </div>
+          </EndExamModal>
+        )}
+      </ReactRouterPrompt>
+      <Modal
+        activity={activity}
+        open={open}
+        onClose={() => setOpen(false)}
+      ></Modal>
 
       <div id="main">
         <SplitterLayout primaryIndex={1} secondaryInitialSize={350}>

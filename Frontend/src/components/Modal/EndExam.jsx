@@ -73,22 +73,41 @@ export default function EndExamModal({ activity, open, onClose, children }) {
           </button>
           <div className="text-center w-full h-52 z-50 flex justify-center items-center flex-col gap-5">
             <div className="mx-auto my-4 w-full">
-              <h3 className="text-lg font-black text-gray-800">End Exam</h3>
+              <h3 className="text-lg font-black text-gray-800">
+                {activity === "goBack" ? "Action restricted " : "End Exam"}
+              </h3>
               <p className="text-md text-gray-700 font-semibold">
-                Are you sure to end exam ?
+                {activity === "goBack"
+                  ? "You can't go back once exam is started"
+                  : " Are you sure to end exam ?"}
               </p>
               <p className="text-md text-gray-700 font-semibold">
-                Ending the exam will share your code and output with faculty
+                {activity === "endExam"
+                  ? "Ending the exam will share your code and output with faculty"
+                  : "To proceed click on confirm button"}
               </p>
             </div>
 
-            <button
-              className="text-white bg-red-500 p-3 rounded-lg w-full flex justify-center items-center gap-2"
-              // onClick={ }
-              onClick={handleClick}
-            >
-              {<IoWarning />} Confirm End Exam
-            </button>
+            {children}
+            {activity === "endExam" ? (
+              <div className="flex justify-center items-center w-full gap-5">
+                <button
+                  className="text-white bg-green-600 p-3 rounded-lg w-full flex justify-center items-center gap-2"
+                  onClick={onClose}
+                >
+                  Back to exam
+                </button>
+
+                <button
+                  className="text-white bg-red-500 p-3 rounded-lg w-full flex justify-center items-center gap-2"
+                  // onClick={ }
+                  onClick={handleClick}
+                >
+                  {activity === "endExam" ? <IoWarning /> : ""}
+                  {activity === "endExam" ? "Confirm End Exam" : "End Exam"}
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

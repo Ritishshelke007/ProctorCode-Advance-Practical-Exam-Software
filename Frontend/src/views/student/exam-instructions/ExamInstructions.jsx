@@ -6,6 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setExamId } from "../../../features/current-exam/currentExamSlice";
 import Modal from "../../../components/Modal/Modal";
 import axios from "axios";
+import { unstable_usePrompt } from "react-router-dom";
+import ReactRouterPrompt from "react-router-prompt";
+import EndExamModal from "../../../components/Modal/EndExam";
 
 const ExamInstructions = () => {
   const [tabChanges, setTabChanges] = useState(0);
@@ -18,8 +21,29 @@ const ExamInstructions = () => {
   const [count, setCount] = useState(0);
   const student = useSelector((state) => state.authData.user.student);
 
+  // unstable_usePrompt({
+  //   message: "Are you sure?",
+  //   when: ({ currentLocation, nextLocation }) =>
+  //     currentLocation.pathname !== nextLocation.pathname,
+  // });
+
   const { courseName, examCode } = location.state;
   console.log(courseName, examCode);
+
+  const handleGoBack = () => {
+    console.log("In handleGoBack");
+    setOpen(true);
+    setActivity("endExam");
+    alert("You are not allowed to go back");
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleGoBack);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleGoBack);
+    };
+  }, []);
 
   const updateExamStartTime = (startTime) => {
     axios

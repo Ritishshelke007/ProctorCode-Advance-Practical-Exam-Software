@@ -32,26 +32,7 @@ const Problem = ({ ps }) => {
         activity={activity}
         open={open}
         onClose={() => setOpen(false)}
-      >
-        {/* Content of your modal */}
-        <div className="text-center w-full h-52 z-50 flex justify-center items-center flex-col gap-10">
-          <div className="mx-auto my-4 w-full">
-            <h3 className="text-lg font-black text-gray-800">
-              Tab Change Detected
-            </h3>
-            <p className="text-md text-gray-700 font-semibold">
-              Tab change activity will be notified to faculty
-            </p>
-          </div>
-
-          <button
-            className="text-white bg-blueSecondary p-3 rounded-lg w-full"
-            //  onClick={handleClick}
-          >
-            Enter Fullscreen
-          </button>
-        </div>
-      </EndExamModal>
+      ></EndExamModal>
       <div>
         <p className="font-semibold">PRN : {student.prn}</p>
         <p className="font-semibold">Name: {student.name}</p>

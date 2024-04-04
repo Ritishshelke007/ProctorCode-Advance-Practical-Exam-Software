@@ -7,7 +7,7 @@ const languages = Object.entries(LANGUAGE_VERSIONS);
 
 const LanguageSelector = ({ defLanguage, onSelectChange }) => {
   return (
-    <div className="p-3 absolute top-0 z-50 right-48">
+    <div className="p-3 absolute top-0 z-50 right-20">
       <Select
         placeholder={defLanguage || "Select Language"}
         options={languages.map(([language, version]) => ({

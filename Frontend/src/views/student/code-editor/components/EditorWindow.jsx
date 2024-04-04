@@ -45,38 +45,6 @@ const EditorWindow = () => {
     wordWrap: "on",
   };
 
-  // useEffect(() => {
-  //   console.log("useEffect running");
-  //   const editor = editorRef.current;
-  //   console.log("Editor reference:", editorRef.current);
-
-  //   // Attach event listeners for copy and paste
-  //   const handleCopy = () => {
-  //     console.log("Copy event detected");
-  //     setActivity("copy");
-  //     setOpen(true);
-  //   };
-
-  //   const handlePaste = () => {
-  //     console.log("paste event detected");
-  //     setActivity("paste");
-  //     setOpen(true);
-  //   };
-
-  //   // if (editor) {
-  //   //   console.log("Attaching event listeners...");
-  //   //   editor.onDidCopy(handleCopy);
-  //   //   editor.onDidPaste(handlePaste);
-  //   // }
-
-  //   // return () => {
-  //   //   if (editor) {
-  //   //     editor.onDidCopy.dispose();
-  //   //     editor.onDidPaste.dispose();
-  //   //   }
-  //   // };
-  // }, [setOpen]);
-
   const onMount = (editor, monaco) => {
     editorRef.current = editor;
     editor.focus();
@@ -125,26 +93,11 @@ const EditorWindow = () => {
   return (
     <>
       <div>
-        <Modal activity={activity} open={open} onClose={() => setOpen(false)}>
-          {/* Content of your modal */}
-          <div className="text-center w-full h-52 z-50 flex justify-center items-center flex-col gap-10">
-            <div className="mx-auto my-4 w-full">
-              <h3 className="text-lg font-black text-gray-800">
-                Tab Change Detected
-              </h3>
-              <p className="text-md text-gray-700 font-semibold">
-                Tab change activity will be notified to faculty
-              </p>
-            </div>
-
-            <button
-              className="text-white bg-blueSecondary p-3 rounded-lg w-full"
-              //  onClick={handleClick}
-            >
-              Enter Fullscreen
-            </button>
-          </div>
-        </Modal>
+        <Modal
+          activity={activity}
+          open={open}
+          onClose={() => setOpen(false)}
+        ></Modal>
         <LanguageSelector
           defLanguage={language}
           onSelectChange={onSelectChange}
