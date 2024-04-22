@@ -32,7 +32,7 @@ const ExamDashboard = () => {
           </h4>
         </div>
 
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-3 gap-4">
           {exams.map((exam, index) => {
             return (
               <div key={index}>

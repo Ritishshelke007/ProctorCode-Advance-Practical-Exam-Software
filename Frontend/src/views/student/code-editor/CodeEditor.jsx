@@ -11,10 +11,12 @@ import { setMonitoringData } from "../../../features/monitoring-data/monitorData
 import ReactRouterPrompt from "react-router-prompt";
 import EndExamModal from "../../../components/Modal/EndExam";
 import { setCode } from "../../../features/result/resultSlice";
+import { useNavigate } from "react-router-dom";
 
 const CodeEditor = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [activity, setActivity] = useState("");
   const examId = useSelector((state) => state.currentExamData.examId);
   const studentId = useSelector((state) => state.authData.user.student._id);
@@ -163,7 +165,7 @@ const CodeEditor = () => {
             })
             .then(({ data }) => {
               console.log(data);
-              navigate("/dashboard", { replace: true });
+              navigate("/write-answers", { replace: true });
             })
             .catch((error) => {
               console.error(error);

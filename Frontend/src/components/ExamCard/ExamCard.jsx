@@ -21,14 +21,19 @@ const ExamCard = ({
 
   return (
     <Card
-      extra={`flex h-[290px] flex-col w-full h-full !p-4 3xl:p-![18px] bg-white ${extra} `}
+      extra={`flex h-[290px] flex-col w-full h-full !p-4  bg-white ${extra} `}
       key={key}
     >
       <div className="h-full w-full">
         <div className="relative w-full space-y-3">
-          <p className="text-lg font-bold text-navy-700 dark:text-white line-clamp-2 h-14">
-            Course Name: {courseName}
-          </p>
+          <div>
+            <p className="text-md font-bold text-navy-700 dark:text-white">
+              Course Name:
+            </p>
+            <p className="text-lg font-bold text-navy-700 dark:text-white ">
+              {courseName}
+            </p>
+          </div>
 
           {secretCode && (
             <p className="text-md mt-1 font-medium text-gray-700 md:mt-2">

@@ -29,6 +29,7 @@ import StudentProfile from "./views/student/profile/Profile";
 import StudentCompletedExams from "./views/student/completed-exams/CompletedExams";
 import ExamInstructions from "./views/student/exam-instructions/ExamInstructions";
 import CodeEditor from "./views/student/code-editor/CodeEditor";
+import Questions from "./views/student/questions/Questions";
 
 // const router = createBrowserRouter(
 //   createRoutesFromElements(
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <StudentSignUp />,
+  },
+  {
+    path: "/write-answers",
+    element: <Questions />,
   },
   {
     path: "/admin",

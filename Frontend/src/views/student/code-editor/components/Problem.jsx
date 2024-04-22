@@ -23,7 +23,7 @@ const Problem = ({ ps }) => {
   console.log(monitoringData.problemStatement);
 
   const handleEndExam = () => {
-    navigate("/dashboard", { replace: true });
+    navigate("/write-answers", { replace: true });
     // setOpen(true);
     // setActivity("endExam");
     // dispatch(setCode(""));
