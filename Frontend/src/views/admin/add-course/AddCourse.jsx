@@ -67,7 +67,7 @@ const AddCourse = () => {
                 name="maximumMarks"
                 placeholder="Enter Maximum Marks"
                 variant="auth"
-                type="text"
+                type="number"
                 extra="mb-3"
               />
 

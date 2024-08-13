@@ -38,6 +38,7 @@ function InputField(props) {
         placeholder={placeholder}
         min={minValue}
         value={value}
+        required
         onChange={handleChange}
         className={`mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none focus:ring-1 focus:ring-blue-700 ${
           disabled === true

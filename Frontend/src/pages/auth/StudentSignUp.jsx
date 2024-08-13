@@ -28,13 +28,13 @@ export default function StudentSignUp() {
       .then(({ data }) => {
         console.log(data);
         toast.success("Student registered successfully");
-        storeInSession("user", JSON.stringify(data));
-        setUserAuth(data);
+        // storeInSession("user", JSON.stringify(data));
+        // setUserAuth(data);
         navigate("/signin", { replace: true });
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Error in Student registration");
+        toast.error(error.response.data.message);
       });
   }
   //   return access_token ? (

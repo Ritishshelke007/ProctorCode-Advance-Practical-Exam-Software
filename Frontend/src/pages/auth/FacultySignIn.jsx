@@ -4,7 +4,7 @@ import Checkbox from "../../components/Checkbox/Checkbox";
 import axios from "axios";
 import InputField from "../../components/InputField/InputField";
 import { storeInSession } from "../../common/session";
-import { Navigate, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 
 export default function FacultySignIn() {
   const formRef = useRef();
@@ -90,18 +90,29 @@ export default function FacultySignIn() {
                 Keep me logged In
               </p>
             </div>
-            <a
+            <NavLink to="/admin"
               className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
-              href=" "
+             
             >
               Forgot Password?
-            </a>
+            </NavLink>
           </div>
 
           <button className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
             Sign In
           </button>
         </form>
+
+        <p className="text-center pt-8">
+          Don't Have account?{" "}
+          <NavLink
+            to="/admin/signup"
+            className="text-brand-500 font-bold hover:underline "
+          >
+            {" "}
+            Sign up
+          </NavLink>
+        </p>
       </div>
     </div>
   );

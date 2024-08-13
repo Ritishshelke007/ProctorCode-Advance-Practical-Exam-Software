@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { storeInSession } from "../../common/session";
 import UserContext from "../../contexts/UserContext";
 
@@ -10,6 +10,8 @@ export default function FacultySignUp() {
   //   userAuth: { access_token },
   //   setUserAuth,
   // } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -29,11 +31,12 @@ export default function FacultySignUp() {
         console.log(data);
         toast.success("Faculty registered successfully");
         storeInSession("user", JSON.stringify(data));
-        setUserAuth(data);
+        navigate("/admin");
+        // setUserAuth(data);
       })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Error in Student registration");
+      .catch(({ response }) => {
+        console.log(response);
+        toast.error(response.data.message);
       });
   }
   //   return access_token ? (
@@ -58,9 +61,10 @@ export default function FacultySignUp() {
                   Email*
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
-                  placeholder="mail@simmmple.com"
+                  required
+                  placeholder="name@email.com"
                   className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
                 />
               </div>
@@ -75,6 +79,7 @@ export default function FacultySignUp() {
                 <input
                   type="text"
                   id="name"
+                  required
                   placeholder="Enter name"
                   className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
                 />
@@ -89,6 +94,7 @@ export default function FacultySignUp() {
                 <input
                   type="password"
                   id="password"
+                  required
                   placeholder="Enter Password"
                   className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border bg-white/0 p-3 text-sm outline-none border-gray-200 dark:!border-white/10 dark:text-white"
                 />

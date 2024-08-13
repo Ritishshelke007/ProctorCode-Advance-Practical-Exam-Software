@@ -52,7 +52,6 @@ const EditorWindow = () => {
 
     editor.onKeyDown((event) => {
       const { keyCode, ctrlKey, metaKey } = event;
-      console.log(keyCode);
       if ((keyCode === 33 || keyCode === 52) && (metaKey || ctrlKey)) {
         event.preventDefault();
         setActivity("copypaste");
@@ -75,19 +74,6 @@ const EditorWindow = () => {
       }
     });
 
-    monaco.editor.registerCommand(
-      "editor.action.clipboardCopyAction",
-      () => {}
-    );
-
-    // Disable cut command
-    monaco.editor.registerCommand("editor.action.clipboardCutAction", () => {});
-
-    // Disable paste command
-    monaco.editor.registerCommand(
-      "editor.action.clipboardPasteAction",
-      () => {}
-    );
   };
 
   return (

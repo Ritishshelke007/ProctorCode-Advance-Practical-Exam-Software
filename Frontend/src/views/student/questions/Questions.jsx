@@ -17,7 +17,7 @@ const Questions = () => {
 
   //const [apiResponse, setApiResponse] = useState("");
   const genAI = new GoogleGenerativeAI(
-    "AIzaSyCcsNCSsEAmKZ4HUXJew0-4WYc1kL1o5_8"
+    "AIzaSyB_ZmRlub2KvYwk73wAx-c-N57Iv1cNM24"
   );
 
   const [chatbotFeedback, setChatbotFeedback] = useState("");
