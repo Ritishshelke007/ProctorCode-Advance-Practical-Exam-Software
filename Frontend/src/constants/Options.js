@@ -17,7 +17,7 @@ const yearOptions = [
   { value: "FY", label: "First Year" },
   { value: "SY", label: "Second Year" },
   { value: "TY", label: "Third Year" },
-  { value: "BE", label: "Final Year" },
+  { value: "BTech", label: "Final Year" },
 ];
 
 export { divisionOptions, batchOptions, courseOptions, yearOptions };

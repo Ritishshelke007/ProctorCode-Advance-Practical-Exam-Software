@@ -263,7 +263,7 @@ const CreateExam = () => {
                 <SelectField
                   label="Select Division*"
                   id="division"
-                  name="division"
+                  name="division"w
                   options={divisionOptions}
                   extra="mb-3"
                   onChange={(e) => setSelectedDivision(e.target.value)}
